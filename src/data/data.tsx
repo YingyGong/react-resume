@@ -63,11 +63,18 @@ export const heroData: Hero = {
   description: (
     <>
       <p className="prose-sm text-stone-200 sm:prose-base lg:prose-lg">
-        I'm an undergraduate at <strong className="text-stone-100">California Institute of Technology (Caltech)</strong> studying Computer Science, currently interning
-        at <strong className="text-stone-100"><a href="https://newrelic.com/about" className="text-stone-100 underline">New Relic</a></strong> to build machine learning models for CPU utilization prediction.
+        I'm an undergraduate at <strong className="text-stone-100">California Institute of Technology (Caltech)</strong>{' '}
+        studying Computer Science, currently interning at{' '}
+        <strong className="text-stone-100">
+          <a className="text-stone-100 underline" href="https://newrelic.com/about">
+            New Relic
+          </a>
+        </strong>{' '}
+        to build machine learning models for CPU utilization prediction.
       </p>
       <p className="prose-sm text-stone-200 sm:prose-base lg:prose-lg">
-        In my free time time, I am a passionate reader, cook, driver, and cyclist. I like to learn new things and meet new people. 
+        In my free time time, I am a passionate reader, cook, driver, and cyclist. I like to learn new things and meet
+        new people.
       </p>
     </>
   ),
@@ -98,7 +105,7 @@ export const aboutData: About = {
     {label: 'Hometown', text: 'Nanjing / China', Icon: FlagIcon},
     {label: 'Study', text: 'Computer Science at Caltech', Icon: AcademicCapIcon},
     {label: 'Interests', text: 'Reading, Cooking, Driving, Cycling', Icon: SparklesIcon},
-    
+
     // {label: 'Employment', text: 'Instant Domains, inc.', Icon: BuildingOffice2Icon},
   ],
 };
@@ -109,7 +116,6 @@ export const aboutData: About = {
 export const languages = ['Python', 'C/C++', 'Rust', 'Java', 'MATLAB', 'JavaScript', 'HTML', 'CSS', 'Swift'];
 export const technologies = ['Git', 'AWS', 'React.js', 'MySQL', 'PyTorch', 'Linux'];
 export const methodologies = ['Agile', 'Scrum', 'OOP', 'DevOps', 'CI/CD'];
-
 
 export const skills: SkillGroup[] = [
   // {
@@ -157,14 +163,14 @@ export const portfolioItems: PortfolioItem[] = [
     title: '2D Physics Engine for Video Game',
     description: (
       <>
-      <p>Key Contributions:</p>
-      <ul className="list-disc list-inside">
-        <li>Led a Team of 4, familiarized with quality control, following agile and scrum methodologies.</li>
-        <li>Developed memory-efficient C libraries for Physics forces and graphics in polygons by vector math.</li>
-        <li>Designed a multimedia 2D video game, “Beaver Run”, with the Physics engine, visualized by SDL2.</li>
-      </ul>
-    </>
-  ),
+        <p>Key Contributions:</p>
+        <ul className="list-disc list-inside">
+          <li>Led a Team of 4, familiarized with quality control, following agile and scrum methodologies.</li>
+          <li>Developed memory-efficient C libraries for Physics forces and graphics in polygons by vector math.</li>
+          <li>Designed a multimedia 2D video game, “Beaver Run”, with the Physics engine, visualized by SDL2.</li>
+        </ul>
+      </>
+    ),
     url: 'https://github.com/YingyGong/Beaver-Run',
     image: porfolioImage1,
   },
@@ -174,17 +180,21 @@ export const portfolioItems: PortfolioItem[] = [
       <>
         <p>Key Contributions:</p>
         <ul className="list-disc list-inside">
-          <li>Built the API with Object-Oriented Design, encapsulated functions for intuitive use by non-technical clients.</li>
-          <li>Improved the computational efficiency up to about 250% by pseudolikelihood algorithms for high parameters.</li>
+          <li>
+            Built the API with Object-Oriented Design, encapsulated functions for intuitive use by non-technical
+            clients.
+          </li>
+          <li>
+            Improved the computational efficiency up to about 250% by pseudolikelihood algorithms for high parameters.
+          </li>
           <li>Transformed laboratory codes into a polished, industry-standard Python package, ensuring robustness.</li>
         </ul>
       </>
-
     ),
     url: 'https://pypi.org/project/dspin/1.0.0/#description',
     image: porfolioImage2,
   },
-  
+
   {
     title: 'My-Grep: NFA-backed Fast Regex Engine',
     description: (
@@ -192,8 +202,13 @@ export const portfolioItems: PortfolioItem[] = [
         <p>Key Contributions:</p>
         <ul className="list-disc list-inside">
           <li>3k+ Rust Codes from scratch</li>
-          <li>Developed my own grep with a nondeterministic finite automata (NFA) and O(n) algorithm for string matching.</li>
-          <li>Implemented prefix extraction for NFA together with Boyer-Moore literal search optimization for fast matching.</li>
+          <li>
+            Developed my own grep with a nondeterministic finite automata (NFA) and O(n) algorithm for string matching.
+          </li>
+          <li>
+            Implemented prefix extraction for NFA together with Boyer-Moore literal search optimization for fast
+            matching.
+          </li>
         </ul>
       </>
     ),
@@ -207,8 +222,14 @@ export const portfolioItems: PortfolioItem[] = [
         <p>Key Contributions:</p>
         <ul className="list-disc list-inside">
           <li>4k+ Rust Codes from scratch</li>
-          <li>Built personal zip application with DEFLATE stream, compressed with canonical huffman coding and LZ77 algorithm.</li>
-          <li>Profiled codes to track its performance and compared with other compression algorithms in speed and space utilization.</li>
+          <li>
+            Built personal zip application with DEFLATE stream, compressed with canonical huffman coding and LZ77
+            algorithm.
+          </li>
+          <li>
+            Profiled codes to track its performance and compared with other compression algorithms in speed and space
+            utilization.
+          </li>
         </ul>
       </>
     ),
@@ -267,14 +288,17 @@ export const education: TimelineItem[] = [
     date: 'Sept 2022 - Present',
     location: 'California Institute of Technology',
     title: 'B.S. Computer Science',
-    content:<>
-    <p>
-      <strong>GPA:</strong> 4.0/4.0
-    </p>
-    <p>
-      <strong>Featured Coursework:</strong> Algorithms, Machine Learning, Statistical Inference, Probability Models, Stochastic Processes, Software Design, Computer Systems, Data Structures
-    </p>
-  </>
+    content: (
+      <>
+        <p>
+          <strong>GPA:</strong> 4.0/4.0
+        </p>
+        <p>
+          <strong>Featured Coursework:</strong> Algorithms, Machine Learning, Statistical Inference, Probability Models,
+          Stochastic Processes, Software Design, Computer Systems, Data Structures
+        </p>
+      </>
+    ),
   },
   // {
   //   date: 'March 2003',
@@ -289,11 +313,12 @@ export const experience: TimelineItem[] = [
     date: 'June 2024 - Present',
     location: 'New Relic Inc., Portland, OR',
     title: 'Software Engineer Intern',
-    content: 
+    content: (
       <p>
-        Building machine learning models to predict CPU utilization, as a backend for RESTful API in data traffic monitoring.
+        Building machine learning models to predict CPU utilization, as a backend for RESTful API in data traffic
+        monitoring.
       </p>
-    ,
+    ),
   },
   {
     date: 'Apr. 2023 - Dec. 2023',
@@ -301,9 +326,15 @@ export const experience: TimelineItem[] = [
     title: 'Research Assistant',
     content: (
       <>
-        <p><strong>Advisor:</strong> Dr. Matt Thomson, California Institute of Technology</p>
-        <p><strong>Project:</strong> Application of Dimensional-reduced Perturbation Network</p>
-        <p className="mb-2"><strong>Field:</strong> Machine Learning for Science, Computatioal Biology</p>
+        <p>
+          <strong>Advisor:</strong> Dr. Matt Thomson, California Institute of Technology
+        </p>
+        <p>
+          <strong>Project:</strong> Application of Dimensional-reduced Perturbation Network
+        </p>
+        <p className="mb-2">
+          <strong>Field:</strong> Machine Learning for Science, Computatioal Biology
+        </p>
         {/* <br />  */}
         <ul className="list-disc list-inside">
           <li>Worked directly with the principal investigator and a PhD on a research project pending publishing.</li>
