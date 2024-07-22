@@ -1,6 +1,6 @@
 import {FC, memo} from 'react';
 
-import {education, experience, SectionId, skills} from '../../../data/data';
+import {education, experience, SectionId, skills,languages, technologies, methodologies} from '../../../data/data';
 import Section from '../../Layout/Section';
 import ResumeSection from './ResumeSection';
 import {SkillGroup} from './Skills';
@@ -15,13 +15,27 @@ const Resume: FC = memo(() => {
             <TimelineItem item={item} key={`${item.title}-${index}`} />
           ))}
         </ResumeSection>
-        <ResumeSection title="Work">
+        <ResumeSection title="Experience">
           {experience.map((item, index) => (
             <TimelineItem item={item} key={`${item.title}-${index}`} />
           ))}
         </ResumeSection>
         <ResumeSection title="Skills">
-          <p className="pb-8">Here you can show a snapshot of your skills to show off to employers</p>
+          {/* <p className="pb-8">Here you can show a snapshot of your skills to show off to employers</p> */}
+          
+        <div className="pb-8">
+          <h3 className="text-lg font-bold">Languages</h3>
+          <p>{languages.join(', ')}</p>
+        </div>
+        <div className="pb-8">
+          <h3 className="text-lg font-bold">Technologies</h3>
+          <p>{technologies.join(', ')}</p>
+        </div>
+        <div className="pb-8">
+          <h3 className="text-lg font-bold">Methodologies</h3>
+          <p>{methodologies.join(', ')}</p>
+        </div>
+        <h3 className="text-lg font-bold">Most common used programming languages: </h3>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {skills.map((skillgroup, index) => (
               <SkillGroup key={`${skillgroup.name}-${index}`} skillGroup={skillgroup} />
