@@ -320,7 +320,7 @@ export const experience: TimelineItem[] = [
         </p>
         <p>
           <strong>Mentors:</strong> Jon Guymon, Dr. Xin Qi 
-          <span style={{ margin: '0 1rem' }} />
+          <span style={{margin: '0 1rem'}} />
           <strong>Manager:</strong> Bhavin Thaker
           </p>
       <ul className="list-disc list-inside">
