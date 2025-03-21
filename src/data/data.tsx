@@ -15,7 +15,7 @@ import porfolioImage1 from '../images/portfolio/portfolio-1.jpg';
 import porfolioImage2 from '../images/portfolio/portfolio-2.jpg';
 import porfolioImage3 from '../images/portfolio/portfolio-3.jpg';
 import porfolioImage4 from '../images/portfolio/portfolio-4.jpg';
-import profilepic from '../images/profilepic.jpg';
+import profilepic from '../images/profilepic.jpeg';
 import testimonialImage from '../images/testimonial.webp';
 import {
   About,
@@ -64,7 +64,7 @@ export const heroData: Hero = {
     <>
       <p className="prose-sm text-stone-200 sm:prose-base lg:prose-lg">
         I'm an undergraduate at <strong className="text-stone-100">California Institute of Technology (Caltech)</strong>{' '}
-        studying Computer Science, currently interning at{' '}
+        studying Computer Science. Recently I am exploring generative modeling on biological data.  I used to intern at{' '}
         <strong className="text-stone-100">
           <a className="text-stone-100 underline" href="https://newrelic.com/about">
             New Relic
@@ -98,11 +98,11 @@ export const heroData: Hero = {
  */
 export const aboutData: About = {
   profileImageSrc: profilepic,
-  description: `Rising junior studying CS at Caltech. I'm passionate about software engineering, machine learning, and applied probability. I'm currently interning at New Relic to build machine learning models for CPU utilization prediction. I am an easy-going person who loves to learn new things and meet new people. I am always open to new opportunities and challenges.`,
+  description: `Junior undergraduate studying CS at Caltech. I'm passionate about machine learning (for sciences), (system-level) software engineering, and applied probability. Recently I am exploring generative modeling on biological data. I used to intern at New Relic to build machine learning models for CPU utilization prediction. I am an easy-going person who loves to learn new things and meet new people.`,
   aboutItems: [
-    {label: 'Location', text: 'Portland, OR', Icon: MapIcon},
+    {label: 'Location', text: 'Pasadena, CA', Icon: MapIcon},
     // {label: 'Age', text: '19', Icon: CalendarIcon},
-    {label: 'Hometown', text: 'Nanjing / China', Icon: FlagIcon},
+    {label: 'Hometown', text: 'Nanjing, Jiangsu, China', Icon: FlagIcon},
     {label: 'Study', text: 'Computer Science at Caltech', Icon: AcademicCapIcon},
     {label: 'Interests', text: 'Reading, Cooking, Driving, Cycling', Icon: SparklesIcon},
 
@@ -310,14 +310,34 @@ export const education: TimelineItem[] = [
 
 export const experience: TimelineItem[] = [
   {
-    date: 'June 2024 - Present',
+    date: 'June 2024 - Sept 2024',
     location: 'New Relic Inc., Portland, OR',
     title: 'Software Engineer Intern',
     content: (
-      <p>
-        Building machine learning models to predict CPU utilization, as a backend for RESTful API in data traffic
-        monitoring.
-      </p>
+      <>
+        <p>
+          <strong>Team:</strong> Capacity Engineering under Cloud Infrastructure
+        </p>
+        <p>
+          <strong>Mentors:</strong> Jon Guymon, Dr. Xin Qi 
+          <span style={{ margin: '0 1rem' }} />
+          <strong>Manager:</strong> Bhavin Thaker
+          </p>
+      <ul className="list-disc list-inside">
+        <li>
+          Conducted two projects, one in machine learning model development and deployment, the other in Java microservice.
+        </li>
+        <li>
+          Created <strong>regression models</strong> on time-series CPU utilization data for load forecasting and balancing.
+        </li>
+        <li>
+          Built the <strong>ML model deployment pipeline</strong> in Azure Databricks including data collection, ETL, and model training.
+        </li>
+        <li>
+          Developed a <strong>Java-based web application</strong> for managing cloud account health for alert management of cloud services.
+        </li>
+      </ul>
+      </>
     ),
   },
   {
@@ -327,7 +347,7 @@ export const experience: TimelineItem[] = [
     content: (
       <>
         <p>
-          <strong>Advisor:</strong> Dr. Matt Thomson, California Institute of Technology
+          <strong>Advisors:</strong> Dr. Matt Thomson, Dr. Jialong Jiang, California Institute of Technology
         </p>
         <p>
           <strong>Project:</strong> Application of Dimensional-reduced Perturbation Network
