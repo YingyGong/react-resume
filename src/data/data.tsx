@@ -30,6 +30,8 @@ import {
   TimelineItem,
 } from './dataDef';
 
+import Link from 'next/link';
+
 /**
  * Page meta data
  */
@@ -64,7 +66,7 @@ export const heroData: Hero = {
     <>
       <p className="prose-sm text-stone-200 sm:prose-base lg:prose-lg">
         I'm an undergraduate at <strong className="text-stone-100">California Institute of Technology (Caltech)</strong>{' '}
-        studying Computer Science. Recently I am exploring generative modeling on biological data.  I used to intern at{' '}
+        studying Computer Science. Recently I am exploring generative modeling on biological data.  I previously interned at{' '}
         <strong className="text-stone-100">
           <a className="text-stone-100 underline" href="https://newrelic.com/about">
             New Relic
@@ -98,17 +100,25 @@ export const heroData: Hero = {
  */
 export const aboutData: About = {
   profileImageSrc: profilepic,
-  description: `Junior undergraduate studying CS at Caltech. I'm passionate about machine learning (for sciences), (system-level) software engineering, and applied probability. Recently I am exploring generative modeling on biological data. I used to intern at New Relic to build machine learning models for CPU utilization prediction. I am an easy-going person who loves to learn new things and meet new people.`,
+  description: `Junior undergraduate studying CS at Caltech. I'm passionate about machine learning (for sciences), (low-level) software engineering, and applied probability. Recently I am exploring generative modeling on biological data. I previously interned at New Relic to build machine learning models for CPU utilization prediction. I am an easy-going person who loves to learn new things and meet new people.`,
   aboutItems: [
-    {label: 'Location', text: 'Pasadena, CA', Icon: MapIcon},
-    // {label: 'Age', text: '19', Icon: CalendarIcon},
-    {label: 'Hometown', text: 'Nanjing, Jiangsu, China', Icon: FlagIcon},
-    {label: 'Study', text: 'Computer Science at Caltech', Icon: AcademicCapIcon},
-    {label: 'Interests', text: 'Reading, Cooking, Driving, Cycling', Icon: SparklesIcon},
-
-    // {label: 'Employment', text: 'Instant Domains, inc.', Icon: BuildingOffice2Icon},
+    { label: 'Location', text: 'Pasadena, CA', Icon: MapIcon },
+    {
+      label: 'Hometown',
+      text: (
+        <Link href="/hometown" title="check more about Nanjing" className="underline">
+          Nanjing, Jiangsu, China
+        </Link>
+      ),
+      Icon: FlagIcon,
+    },
+    { label: 'Study', text: 'Computer Science at Caltech', Icon: AcademicCapIcon },
+    { label: 'Interests', text: 'Reading, Cooking, Driving, Cycling', Icon: SparklesIcon },
   ],
 };
+
+    // {label: 'Employment', text: 'Instant Domains, inc.', Icon: BuildingOffice2Icon},
+
 
 /**
  * Skills section

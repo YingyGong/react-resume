@@ -45,7 +45,7 @@ export interface About {
 
 export interface AboutItem {
   label: string;
-  text: string;
+  text: React.ReactNode;
   Icon?: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, 'ref'>>;
 }
 

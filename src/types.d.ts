@@ -9,7 +9,15 @@ declare module '*.jpeg' {
   const value: string;
   export default value;
 }
-
+// declare module '*.jpeg' {
+//   const content: {
+//     src: string;
+//     height: number;
+//     width: number;
+//     placeholder?: string;
+//   };
+//   export default content;
+// }
 declare module '*.webp' {
   const value: string;
   export default value;
