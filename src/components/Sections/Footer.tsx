@@ -24,7 +24,7 @@ const Footer: FC = memo(() => (
         href="https://reactresume.com">
         <BoltIcon className="h-5 w-5 text-yellow" />
         <span>
-          Template from Tim Baker 
+          Template from Tim Baker
           {/* <span className="text-white">React</span>
           <span className="italic text-yellow">Resume</span> */}
         </span>

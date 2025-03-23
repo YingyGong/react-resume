@@ -1,6 +1,6 @@
 import {FC, memo} from 'react';
 
-import {education, experience, languages, methodologies,SectionId, skills, technologies} from '../../../data/data';
+import {education, experience, languages, methodologies, SectionId, skills, technologies} from '../../../data/data';
 import Section from '../../Layout/Section';
 import ResumeSection from './ResumeSection';
 import {SkillGroup} from './Skills';
