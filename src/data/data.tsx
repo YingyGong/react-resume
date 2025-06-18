@@ -51,7 +51,7 @@ export const SectionId = {
   Skills: 'skills',
   Stats: 'stats',
   Testimonials: 'testimonials',
-  Blog = 'blog',
+  Blog: 'blog',
 } as const;
 
 export type SectionId = (typeof SectionId)[keyof typeof SectionId];
@@ -120,6 +120,8 @@ export const aboutData: About = {
 
 // {label: 'Employment', text: 'Instant Domains, inc.', Icon: BuildingOffice2Icon},
 
+
+
 /**
  * Skills section
  */
@@ -164,6 +166,18 @@ export const skills: SkillGroup[] = [
     ],
   },
 ];
+
+/**
+ * Blog section
+ */
+export const blogPosts = [
+  {
+    title: 'Reflections on Ph6/7',
+    href: '/ph67',
+    description: 'Why I picked physics up again — an unexpected return.',
+  },
+];
+
 
 /**
  * Portfolio section

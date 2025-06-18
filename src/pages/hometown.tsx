@@ -94,9 +94,9 @@ const HometownPage = React.memo(() => {
             (北京).
           </p>
 
-          <p>
+          {/* <p>
             Fun fact: Nanjing's history as China's capital is longer than the history of the United States as a nation.
-          </p>
+          </p> */}
         </section>
 
         <section id="explore">
