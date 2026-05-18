@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moving Sale · 搬家清仓</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --ink: #1a1614;
+    --warm: #c8a882;
+    --accent: #d4603a;
+    --muted: #8a7f78;
+    --card: #ffffff;
+    --tag-bg: #f0ebe3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+  .hero {
+    background: var(--ink); color: var(--cream);
+    text-align: center; padding: 64px 24px 56px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 120%, #c8a88233 0%, transparent 70%);
+  }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--warm); margin-bottom: 16px; position: relative; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.1; position: relative; }
+  .hero h1 span { color: var(--warm); }
+  .hero-sub { margin-top: 14px; font-size: 15px; color: #b8b0a8; position: relative; }
+  .hero-meta { margin-top: 28px; display: flex; justify-content: center; gap: 32px; position: relative; }
+  .hero-meta-item { font-size: 13px; color: #8a8078; }
+  .hero-meta-item strong { display: block; font-size: 20px; color: var(--cream); font-weight: 500; }
+
+  /* ── How it works strip ── */
+  .how-it-works { display: flex; justify-content: center; gap: 0; background: white; border-bottom: 1px solid #ede8e0; }
+  .step { display: flex; align-items: center; gap: 12px; padding: 18px 28px; flex: 1; max-width: 340px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--cream); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 13px; line-height: 1.45; }
+  .step-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .step-divider { width: 1px; background: #ede8e0; margin: 14px 0; }
+  @media (max-width: 700px) {
+    .how-it-works { flex-direction: column; }
+    .step-divider { width: auto; height: 1px; margin: 0 20px; }
+    .step { max-width: none; }
+  }
+
+  .filter-bar { display: flex; gap: 10px; padding: 28px 40px 0; flex-wrap: wrap; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .filter-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+  .filter-btn { padding: 7px 18px; border-radius: 100px; border: 1.5px solid #ddd5c8; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+  .filter-btn.active, .filter-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; padding: 32px 40px 64px; max-width: 1300px; margin: 0 auto; }
+
+  .card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px #0000000a; transition: transform 0.25s ease, box-shadow 0.25s ease; animation: fadeUp 0.5s ease both; cursor: pointer; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px #00000014; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.10s}.card:nth-child(3){animation-delay:.15s}.card:nth-child(4){animation-delay:.20s}.card:nth-child(5){animation-delay:.25s}.card:nth-child(6){animation-delay:.30s}.card:nth-child(7){animation-delay:.35s}.card:nth-child(8){animation-delay:.40s}.card:nth-child(9){animation-delay:.45s}.card:nth-child(10){animation-delay:.50s}.card:nth-child(11){animation-delay:.55s}.card:nth-child(12){animation-delay:.60s}
+
+  .card-img { width: 100%; display: block; object-fit: contain; background: #f0ebe3; }
+  .card-body { padding: 20px 22px 22px; }
+  .card-tags { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .tag { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: var(--tag-bg); color: var(--muted); font-weight: 500; }
+  .tag.new { background: #e8f5e9; color: #2e7d32; }
+  .tag.used { background: #fff8e1; color: #856800; }
+  .card-title-en { font-family: 'Playfair Display', serif; font-size: 1.15rem; line-height: 1.3; margin-bottom: 4px; }
+  .card-title-zh { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #f0ebe3; }
+  .price { font-size: 1.5rem; font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+  .price sup { font-size: 0.85rem; vertical-align: super; }
+  .btn-contact { padding: 9px 18px; background: var(--ink); color: var(--cream); border: none; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; transition: background 0.2s; }
+  .btn-contact:hover { background: var(--accent); }
+
+  /* ── Sold badge ── */
+  .card.sold { cursor: default; }
+  .card.sold:hover { transform: none; box-shadow: 0 2px 12px #0000000a; }
+  .card.sold .card-img { filter: grayscale(60%) brightness(0.85); }
+  .card.sold .card-body { opacity: 0.6; }
+  .card.sold .btn-contact { background: #bbb; cursor: default; pointer-events: none; }
+  .sold-ribbon { position: relative; }
+  .card.sold .sold-ribbon::after { content: 'SOLD'; position: absolute; top: 16px; left: -8px; background: var(--accent); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 16px; border-radius: 0 4px 4px 0; box-shadow: 2px 2px 6px #0003; }
+
+  /* ── Modal ── */
+  .modal-overlay { position: fixed; inset: 0; background: #000000b0; display: none; align-items: center; justify-content: center; z-index: 1000; padding: 24px; overflow-y: auto; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--cream); border-radius: 20px; max-width: 520px; width: 100%; padding: 36px 40px 40px; position: relative; animation: modalIn 0.25s ease; margin: auto; }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  .modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; cursor: pointer; color: var(--muted); background: none; border: none; line-height: 1; }
+  .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 4px; }
+  .modal-zh { color: var(--muted); margin-bottom: 16px; font-size: 14px; }
+  .modal-price { font-size: 2rem; color: var(--accent); font-weight: 500; margin-bottom: 16px; }
+  .modal-note { font-size: 13px; color: var(--muted); line-height: 1.8; background: white; padding: 14px 16px; border-radius: 12px; white-space: pre-line; margin-bottom: 16px; }
+  .modal-hint { font-size: 12.5px; color: #7a5c00; background: #fff8e8; border: 1px solid #f0dfa0; border-radius: 10px; padding: 12px 14px; line-height: 1.6; margin-bottom: 20px; }
+  .modal-sold-note { font-size: 14px; color: var(--accent); background: #fdf0ec; border-radius: 10px; padding: 14px 16px; text-align: center; font-weight: 500; }
+
+  /* ── Button ── */
+  .btn-primary { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; border-radius: 14px; border: none; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .btn-calendly { background: var(--ink); color: var(--cream); }
+  .btn-calendly:hover { background: #006bff; transform: translateY(-1px); }
+  .btn-icon { width: 22px; height: 22px; flex-shrink: 0; }
+
+  footer { text-align: center; padding: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid #e8e0d5; }
+
+  @media (max-width: 600px) {
+    .grid { padding: 20px 16px 48px; gap: 16px; }
+    .filter-bar { padding: 20px 16px 0; }
+    .hero { padding: 48px 20px 44px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Moving Sale · 搬家清仓大甩卖</div>
+  <h1>Quality Items,<br><span>Great Prices</span></h1>
+  <!-- <p class="hero-sub">Small items local pickup only; I can help with large items case by case · 本地自取 · 91106, Pasadena, CA</p> -->
+   <p class="hero-sub">
+  Small items: local pickup preferred.<br>
+  Large items: help is possible case by case. please leave a message in your booking. <br>
+  Pasadena area (91106).<br><br>
+  小件优先自取；大件可视情况协助运输，请在预约中留言。<br>
+  Pasadena 附近（91106）。
+</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><strong>12</strong>Items</div>
+    <div class="hero-meta-item"><strong>New &amp; Used</strong>Conditions</div>
+    <div class="hero-meta-item"><strong>Cash / Venmo / Zelle</strong>Accepted</div>
+  </div>
+</div>
+
+<div class="how-it-works">
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text">
+      <strong>Click any available item</strong>
+      View details · 点击商品查看详情
+    </div>
+  </div>
+  <div class="step-divider"></div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text">
+      <strong>Schedule a pickup time</strong>
+      Book via Calendly — include the item name in your note · 备注商品名称
+    </div>
+  </div>
+  <div class="step-divider"></div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text">
+      <strong>Pay in person · </strong> 现场付款
+    </div>
+  </div>
+</div>
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" onclick="filterCards('all',this)">All · 全部</button>
+  <button class="filter-btn" onclick="filterCards('new',this)">New · 全新</button>
+  <button class="filter-btn" onclick="filterCards('used',this)">Used · 二手</button>
+  <button class="filter-btn" onclick="filterCards('furniture',this)">Furniture · 家具</button>
+  <button class="filter-btn" onclick="filterCards('tech',this)">Tech · 电子</button>
+  <button class="filter-btn" onclick="filterCards('other',this)">Other · 其他</button>
+</div>
+
+<div class="grid" id="grid">
+
+  <div class="card" data-cat="furniture used" data-id="1" onclick="openModal(1)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5126_Large.jpeg" alt="Bookcase" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Furniture · 家具</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="tech used" data-id="2" onclick="openModal(2)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5128_Large.jpeg" alt="Laptop Stand" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Tech · 电子</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="other new" data-id="3" onclick="openModal(3)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5129_Large.jpeg" alt="Postpartum Pads" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag new">New · 全新</span><span class="tag">Maternity · 母婴</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="tech new" data-id="4" onclick="openModal(4)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5130_Large.jpeg" alt="Lume Cube" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag new">New · 全新</span><span class="tag">Tech · 电子</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="tech new" data-id="5" onclick="openModal(5)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5131_Large.jpeg" alt="Magic Keyboard" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag new">New · 全新</span><span class="tag">Tech · 电子</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="tech new" data-id="6" onclick="openModal(6)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5132_Large.jpeg" alt="Webcam" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag new">New · 全新</span><span class="tag">Tech · 电子</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="tech used" data-id="7" onclick="openModal(7)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5133_Large.jpeg" alt="Ring Light" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Tech · 电子</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="furniture used" data-id="8" onclick="openModal(8)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5134_Large.jpeg" alt="Corner Shelf" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Furniture · 家具</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="other used" data-id="9" onclick="openModal(9)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5135_Large.jpeg" alt="Mini Fridge" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Appliance · 家电</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="other used" data-id="10" onclick="openModal(10)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5136_Large.jpeg" alt="Heater" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Appliance · 家电</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="furniture used" data-id="11" onclick="openModal(11)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5137_Large.jpeg" alt="Standing Desk" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Furniture · 家具</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="furniture used" data-id="12" onclick="openModal(12)">
+    <div class="sold-ribbon"><img class="card-img" src="IMG_5138_Large.jpeg" alt="Desk" loading="lazy"></div>
+    <div class="card-body">
+      <div class="card-tags"><span class="tag used">Used · 二手</span><span class="tag">Furniture · 家具</span></div>
+      <div class="card-title-en"></div>
+      <div class="card-title-zh"></div>
+      <div class="card-footer"><div class="price"></div><button class="btn-contact">Details · 详情</button></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2 id="m-en"></h2>
+    <div class="modal-zh" id="m-zh"></div>
+    <div class="modal-price" id="m-price"></div>
+    <div class="modal-note" id="m-note"></div>
+
+    <div id="m-available">
+      <div class="modal-hint">
+        📅 <strong>When booking on Calendly, please include the item name and your phone number in your note</strong> so I know what you're coming for.<br>
+        请在 Calendly 备注中写明你想要的商品名称和手机号码。<br><br>
+        ⚠️ <strong>First to show up gets it.</strong> Payment in person · 先到先得，现场付款。
+      </div>
+      <a class="btn-primary btn-calendly" id="calendly-btn" href="YOUR_CALENDLY_LINK" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="4" width="18" height="18" rx="3" stroke="white" stroke-width="2"/>
+          <path d="M3 9h18" stroke="white" stroke-width="2"/>
+          <path d="M8 2v4M16 2v4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="8.5" cy="14" r="1.5" fill="white"/>
+          <circle cx="12" cy="14" r="1.5" fill="white"/>
+          <circle cx="15.5" cy="14" r="1.5" fill="white"/>
+        </svg>
+        Schedule Pickup via Calendly · 预约取货时间
+      </a>
+    </div>
+
+    <div id="m-sold" class="modal-sold-note" style="display:none">
+      😔 This item has been sold · 此商品已售出<br>
+      <span style="font-size:13px;font-weight:400;color:var(--muted)">Check out the other available items!</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  📍 91106, Pasadena, CA <br><br>
+  All sales final · 售出不退 &nbsp;|&nbsp; Zelle / Venmo/ Cash preferred · 现金或Venmo/Zelle付款
+</footer>
+
+<script>
+// ── CONFIG ───────────────────────────────────────────────
+const CALENDLY_URL = 'https://calendly.com/gongmercury/30min';
+
+// To mark an item as sold, change false → true
+const sold = {
+  1: false,  // 4-Shelf Bookcase
+  2: false,  // Laptop Stand + Hub
+  3: false,  // Postpartum Pads
+  4: false,  // Lume Cube Light
+  5: false,  // Magic Keyboard
+  6: false,  // Logitech Webcam
+  7: false,  // Ring Light
+  8: false,  // Corner Shelf
+  9: false,  // Mini Fridge
+  10: false, // Lasko Heater
+  11: false, // Standing Desk
+  12: false, // Trestle Desk
+};
+// ─────────────────────────────────────────────────────────
+
+const items = {
+  1: { en:"4-Shelf Bookcase", zh:"四层书架", price:"$22",
+    note:"Light wood color, 4 shelves with generous height spacing. Good used condition with minor surface wear. It's light, and buyer must arrange own transport.\n\n浅木色四层书架，层间距宽敞，有少许使用痕迹。不重，买家自行搬运。" },
+  2: { en:"Aluminum Laptop Stand + USB-C Hub", zh:"铝合金笔记本支架 + USB-C 集线器", price:"$10",
+    note:"Space gray aluminum laptop stand bundled with a multi-port USB-C hub. Lightly used, great condition.\n\n深空灰铝合金笔记本支架，自带USB-C多功能扩展坞，轻微使用，状态良好。" },
+  3: { en:"Postpartum Care Pads – 十月结晶 (10 pcs)", zh:"十月结晶 产褥期护理垫（10片）", price:"$8",
+    note:"Brand: 十月结晶 (Be a Better Mom). Size: 60cm × 45cm. 10 pcs per pack. Sealed / unopened.\n\n全新未拆封，十月结晶品牌。60×45cm，10片装，加大防护，瞬吸防渗，云感轻柔。" },
+  4: { en:"Lume Cube Video Conference Light", zh:"Lume Cube 视频会议补光灯", price:"$32",
+    note:"New in box. Attaches to laptop or desktop monitor with suction cup mount.\n\n全新未开封，适用于笔记本或台式显示器，视频会议或内容创作补光。" },
+  5: { en:"Apple Magic Keyboard (Sealed Box)", zh:"苹果 Magic Keyboard（原封未拆）", price:"$70",
+    note:"Brand new, sealed in original Apple box. Full-size layout. Bluetooth wireless, compatible with Mac / iPad.\n\n原封未拆，苹果正品。全尺寸，蓝牙无线，适配 Mac / iPad。" },
+  6: { en:"Logitech C920x Pro HD Webcam", zh:"罗技 C920x Pro 高清摄像头", price:"$42",
+    note:"New in eco-friendly packaging. 1080p Full HD, dual stereo microphones, autofocus.\n\n全新环保包装。1080p全高清，双立体声麦克风，自动对焦。" },
+  7: { en:"Ring Light with Tripod Stand (~18\")", zh:"环形补光灯 + 落地三脚架（约18英寸）", price:"$46",
+    note:"Large ring light on tall floor tripod. Good for content creation, video calls, or photos. Used.\n\n大型环形灯，配落地三脚架。二手使用。" },
+  8: { en:"3-Tier Corner Shelf", zh:"三层转角置物架", price:"$12",
+    note:"Light wood shelves with white tube legs. Compact corner design. Lightly used.\n\n浅木色三层转角置物架，白色立管，轻微使用。" },
+  9: { en:"Insignia Mini Fridge", zh:"Insignia 冷冻冷藏小冰箱", price:"$70",
+    note:"Stainless steel finish. Separate top freezer. Works perfectly.\n\n不锈钢外观，上层独立冷冻室，附带滚轮底座，运行正常。" },
+  10: { en:"Lasko Ceramic Tower Heater", zh:"Lasko 陶瓷塔式暖风机", price:"$30",
+    note:"Oscillating ceramic tower heater, multiple heat settings. Floor standing. Used, fully functional, great for Pasadena's winter.\n\n陶瓷加热，可旋转送风，多档设置，使用正常。" },
+  11: { en:"Standing Desk Converter / Sit-Stand Riser", zh:"升降站立式工作台", price:"$46",
+    note:"Black scissor-lift converter with side keyboard/mouse tray. Adjustable height. Used.\n\n黑色剪刀式升降台，附侧边键鼠托盘，多档可调。" },
+  12: { en:"IKEA White Desk with Wood Trestle Legs", zh:"白色桌面 + 实木锯马腿书桌", price:"$70",
+    note:"White tabletop on adjustable wooden trestle legs (IKEA FINNVARD style). Items on desk not included.\n\n宽大白色桌面，配可调节实木锯马腿。桌上物品不含。" },
+};
+
+// Apply sold state AND populate titles/prices from items on load
+document.querySelectorAll('.card').forEach((card, i) => {
+  const id = i + 1;
+  card.dataset.id = id;
+
+  // Populate title and price from items
+  const item = items[id];
+  if (item) {
+    card.querySelector('.card-title-en').textContent = item.en;
+    card.querySelector('.card-title-zh').textContent = item.zh;
+    const priceEl = card.querySelector('.price');
+    priceEl.innerHTML = `<sup>$</sup>${item.price.replace('$', '')}`;
+  }
+
+  // Apply sold state
+  if (sold[id]) {
+    card.classList.add('sold');
+    const imgWrap = card.querySelector('.sold-ribbon');
+    if (imgWrap) imgWrap.classList.add('active');
+    const btn = card.querySelector('.btn-contact');
+    if (btn) btn.textContent = 'Sold · 已售';
+  }
+});
+
+document.getElementById('calendly-btn').href = CALENDLY_URL;
+
+function openModal(id) {
+  const item = items[id];
+  document.getElementById('m-en').textContent = item.en;
+  document.getElementById('m-zh').textContent = item.zh;
+  document.getElementById('m-price').textContent = item.price;
+  document.getElementById('m-note').textContent = item.note;
+  document.getElementById('m-available').style.display = sold[id] ? 'none' : '';
+  document.getElementById('m-sold').style.display = sold[id] ? '' : 'none';
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal') || e.target.classList.contains('modal-close')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+
+function filterCards(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat.includes(cat)) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
