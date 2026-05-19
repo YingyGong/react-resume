@@ -84,6 +84,15 @@
   .sold-ribbon { position: relative; }
   .card.sold .sold-ribbon::after { content: 'SOLD'; position: absolute; top: 16px; left: -8px; background: var(--accent); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 16px; border-radius: 0 4px 4px 0; box-shadow: 2px 2px 6px #0003; }
 
+  /* ── Reserved badge ── */
+  .card.reserved { cursor: default; }
+  .card.reserved:hover { transform: none; box-shadow: 0 2px 12px #0000000a; }
+  .card.reserved .card-img { filter: brightness(0.9) sepia(0.15); }
+  .card.reserved .card-body { opacity: 0.78; }
+  .card.reserved .btn-contact { background: #b07d2a; cursor: default; pointer-events: none; }
+  .card.reserved .sold-ribbon::after { content: 'RESERVED'; position: absolute; top: 16px; left: -8px; background: #b07d2a; color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 16px; border-radius: 0 4px 4px 0; box-shadow: 2px 2px 6px #0003; }
+  .modal-reserved-note { font-size: 14px; color: #7a5500; background: #fff8e8; border: 1px solid #f0dfa0; border-radius: 10px; padding: 14px 16px; text-align: center; font-weight: 500; }
+
   /* ── Modal ── */
   .modal-overlay { position: fixed; inset: 0; background: #000000b0; display: none; align-items: center; justify-content: center; z-index: 1000; padding: 24px; overflow-y: auto; }
   .modal-overlay.open { display: flex; }
@@ -391,6 +400,12 @@
       😔 This item has been sold · 此商品已售出<br>
       <span style="font-size:13px;font-weight:400;color:var(--muted)">Check out the other available items!</span>
     </div>
+
+    <div id="m-reserved" class="modal-reserved-note" style="display:none">
+      🕐 This item is reserved — someone placed an order but we haven't met yet.<br>
+      此商品已被预订，待交接完成后状态更新。<br>
+      <span style="font-size:13px;font-weight:400;color:var(--muted)">Check back soon, or browse other items!</span>
+    </div>
   </div>
 </div>
 
@@ -403,6 +418,29 @@
 // ── CONFIG ───────────────────────────────────────────────
 const CALENDLY_URL = 'https://calendly.com/gongmercury/30min';
 
+// To mark an item as reserved (order placed, not yet picked up), change false → true
+const reserved = {
+  1: false,  // 4-Shelf Bookcase
+  2: true,  // Laptop Stand + Hub
+  3: false,  // Postpartum Pads
+  4: false,  // Lume Cube Light
+  5: false,  // Magic Keyboard
+  6: true,  // Logitech Webcam
+  7: false,  // Ring Light
+  8: true,  // Corner Shelf
+  9: true,  // Mini Fridge
+  10: false, // Lasko Heater
+  11: true, // Standing Desk
+  12: false, // Trestle Desk
+  13: false, // Various Books
+  14: false, // Haircut Set
+  15: false, // UHURU Keyboard & Mouse
+  16: false, // Clap LED Lamp
+  17: false, // Toppin Humidifier
+  18: false, // Electric Guitar
+  19: false, // Instax Mini 12
+};
+
 // To mark an item as sold, change false → true
 const sold = {
   1: false,  // 4-Shelf Bookcase
@@ -412,10 +450,10 @@ const sold = {
   5: false,  // Magic Keyboard
   6: false,  // Logitech Webcam
   7: false,  // Ring Light
-  8: true,  // Corner Shelf
+  8: false,  // Corner Shelf
   9: false,  // Mini Fridge
   10: false, // Lasko Heater
-  11: true, // Standing Desk
+  11: false, // Standing Desk
   12: false, // Trestle Desk
   13: false, // Various Books
   14: false, // Haircut Set
@@ -482,13 +520,17 @@ document.querySelectorAll('.card').forEach((card, i) => {
     priceEl.innerHTML = `<sup>$</sup>${item.price.replace('$', '')}`;
   }
 
-  // Apply sold state
+  // Apply sold/reserved state
   if (sold[id]) {
     card.classList.add('sold');
     const imgWrap = card.querySelector('.sold-ribbon');
     if (imgWrap) imgWrap.classList.add('active');
     const btn = card.querySelector('.btn-contact');
     if (btn) btn.textContent = 'Sold · 已售';
+  } else if (reserved[id]) {
+    card.classList.add('reserved');
+    const btn = card.querySelector('.btn-contact');
+    if (btn) btn.textContent = 'Reserved · 已预订';
   }
 });
 
@@ -500,8 +542,11 @@ function openModal(id) {
   document.getElementById('m-zh').textContent = item.zh;
   document.getElementById('m-price').textContent = item.price;
   document.getElementById('m-note').textContent = item.note;
-  document.getElementById('m-available').style.display = sold[id] ? 'none' : '';
-  document.getElementById('m-sold').style.display = sold[id] ? '' : 'none';
+  const isSold = sold[id];
+  const isReserved = reserved[id];
+  document.getElementById('m-available').style.display = (isSold || isReserved) ? 'none' : '';
+  document.getElementById('m-sold').style.display = isSold ? '' : 'none';
+  document.getElementById('m-reserved').style.display = isReserved ? '' : 'none';
   document.getElementById('modal').classList.add('open');
 }
 
